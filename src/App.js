@@ -1,31 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Route, Link } from 'react-router-dom';
+import CollectionContext from './contexts/CollectionContext';
 import SearchPage from './pages/SearchPage';
 import BooksGrid from './components/BooksGrid';
-import * as BooksAPI from './services/BooksAPI';
 import './App.css';
 
 const App = () => {
-  const [myCollection, setMyCollection] = useState([]);
-
-  useEffect(() => {
-    BooksAPI.getAll()
-      .then(data => data && setMyCollection(data))
-      .catch(error => console.log(error));
-  }, []);
-
-  const updateCollection = (book, shelf) => {
-    BooksAPI.update(book, shelf).then(
-      setMyCollection(
-        myCollection.map(bookInCollection => {
-          if (bookInCollection.id === book.id) {
-            bookInCollection.shelf = shelf;
-          }
-          return bookInCollection;
-        })
-      )
-    );
-  };
+  const { collection } = useContext(CollectionContext);
 
   return (
     <div className="app">
@@ -42,19 +23,19 @@ const App = () => {
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Currently Reading</h2>
                   <div className="bookshelf-books">
-                    <BooksGrid books={myCollection} myCollection={myCollection} shelf="currentlyReading" updateCollection={updateCollection} />
+                    <BooksGrid books={collection} shelf="currentlyReading" />
                   </div>
                 </div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Want to Read</h2>
                   <div className="bookshelf-books">
-                    <BooksGrid books={myCollection} myCollection={myCollection} shelf="wantToRead" updateCollection={updateCollection} />
+                    <BooksGrid books={collection} shelf="wantToRead" />
                   </div>
                 </div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Read</h2>
                   <div className="bookshelf-books">
-                    <BooksGrid books={myCollection} myCollection={myCollection} shelf="read" updateCollection={updateCollection} />
+                    <BooksGrid books={collection} shelf="read" />
                   </div>
                 </div>
               </div>
@@ -67,7 +48,7 @@ const App = () => {
           </div>
         )}
       />
-      <Route path="/search" render={() => <SearchPage myCollection={myCollection} updateCollection={updateCollection} />} />
+      <Route path="/search" component={SearchPage} />
     </div>
   );
 };

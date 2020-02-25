@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import CollectionContext from '../contexts/CollectionContext';
 
-const ShelfSelect = ({ book, bookInCollection, shelf, updateCollection }) => {
+const ShelfSelect = ({ book, bookInCollection, shelf }) => {
+  const { updateCollection } = useContext(CollectionContext);
+
   return (
     ((shelf && bookInCollection.shelf === shelf) || !shelf) && (
       <div className="book-shelf-changer">
@@ -23,7 +26,6 @@ ShelfSelect.propTypes = {
   book: PropTypes.object.isRequired,
   bookInCollection: PropTypes.object,
   shelf: PropTypes.string,
-  updateCollection: PropTypes.func.isRequired,
 };
 
 export default ShelfSelect;

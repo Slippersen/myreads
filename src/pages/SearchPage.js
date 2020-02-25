@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import BooksGrid from '../components/BooksGrid';
 import * as BooksAPI from '../services/BooksAPI';
 
-const SearchPage = ({ myCollection, updateCollection }) => {
+const SearchPage = () => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
 
@@ -43,15 +42,10 @@ const SearchPage = ({ myCollection, updateCollection }) => {
         </div>
       </div>
       <div className="search-books-results">
-        <BooksGrid books={results} myCollection={myCollection} updateCollection={updateCollection} />
+        <BooksGrid books={results} />
       </div>
     </div>
   );
-};
-
-SearchPage.propTypes = {
-  myCollection: PropTypes.array.isRequired,
-  updateCollection: PropTypes.func.isRequired,
 };
 
 export default SearchPage;

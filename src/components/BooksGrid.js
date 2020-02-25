@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import CollectionContext from '../contexts/CollectionContext';
 import ShelfSelect from './ShelfSelect';
 
-const BooksGrid = ({ books, myCollection, shelf, updateCollection }) => {
+const BooksGrid = ({ books, shelf }) => {
+  const { collection, updateCollection } = useContext(CollectionContext);
+
   return (
     <ol className="books-grid">
       {books &&
@@ -20,7 +23,7 @@ const BooksGrid = ({ books, myCollection, shelf, updateCollection }) => {
                         height: 193,
                         backgroundImage: `url("${book.imageLinks && book.imageLinks.smallThumbnail}")`,
                       }}></div>
-                    <ShelfSelect book={book} bookInCollection={myCollection.filter(myBook => myBook.id === book.id)[0]} shelf={shelf || null} updateCollection={updateCollection} />
+                    <ShelfSelect book={book} bookInCollection={collection.filter(myBook => myBook.id === book.id)[0]} shelf={shelf || null} updateCollection={updateCollection} />
                   </div>
                   <div className="book-title">{book.title}</div>
                   <div className="book-authors">{book.authors && book.authors.join(', ')}</div>
@@ -34,9 +37,7 @@ const BooksGrid = ({ books, myCollection, shelf, updateCollection }) => {
 
 BooksGrid.propTypes = {
   books: PropTypes.array.isRequired,
-  myCollection: PropTypes.array.isRequired,
   shelf: PropTypes.string,
-  updateCollection: PropTypes.func.isRequired,
 };
 
 export default BooksGrid;
