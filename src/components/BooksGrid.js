@@ -9,7 +9,6 @@ const BooksGrid = ({ books, shelf }) => {
   return (
     <ol className="books-grid">
       {books &&
-        Array.isArray(books) &&
         books.map(
           book =>
             book.shelf === shelf && (

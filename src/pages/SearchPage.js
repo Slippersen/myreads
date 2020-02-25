@@ -41,9 +41,7 @@ const SearchPage = () => {
           <input type="text" placeholder="Search by title or author" onKeyUp={event => handleSearch(event)} />
         </div>
       </div>
-      <div className="search-books-results">
-        <BooksGrid books={results} />
-      </div>
+      <div className="search-books-results">{Array.isArray(results) && <BooksGrid books={results} />}</div>
     </div>
   );
 };
