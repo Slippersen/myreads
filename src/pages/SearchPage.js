@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import ShelfSelect from '../components/ShelfSelect';
+import BooksGrid from '../components/BooksGrid';
 import * as BooksAPI from '../services/BooksAPI';
 
 const SearchPage = ({ myCollection, updateMyCollection }) => {
@@ -41,27 +41,7 @@ const SearchPage = ({ myCollection, updateMyCollection }) => {
         </div>
       </div>
       <div className="search-books-results">
-        <ol className="books-grid">
-          {results &&
-            results.map(result => (
-              <li key={result.id}>
-                <div className="book">
-                  <div className="book-top">
-                    <div
-                      className="book-cover"
-                      style={{
-                        width: 128,
-                        height: 193,
-                        backgroundImage: `url("${result.imageLinks && result.imageLinks.smallThumbnail}")`,
-                      }}></div>
-                    <ShelfSelect bookInCollection={myCollection.filter(book => book.id === result.id)[0]} />
-                  </div>
-                  <div className="book-title">{result.title}</div>
-                  <div className="book-authors">{result.authors && result.authors.join(', ')}</div>
-                </div>
-              </li>
-            ))}
-        </ol>
+        <BooksGrid books={results} myCollection={myCollection} />
       </div>
     </div>
   );
