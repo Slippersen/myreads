@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import * as BooksAPI from '../services/BooksAPI';
 
-const SearchPage = () => {
+const SearchPage = ({ myCollection, updateMyCollection }) => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
 
@@ -73,6 +74,11 @@ const SearchPage = () => {
       </div>
     </div>
   );
+};
+
+SearchPage.propTypes = {
+  myCollection: PropTypes.array.isRequired,
+  updateMyCollection: PropTypes.func.isRequired,
 };
 
 export default SearchPage;
