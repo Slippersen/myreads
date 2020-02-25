@@ -13,18 +13,15 @@ export const CollectionProvider = ({ children }) => {
   }, []);
 
   const updateCollection = (book, shelf) => {
-    BooksAPI.update(book, shelf)
-      .then(
-        setCollection(
-          collection.map(bookInCollection => {
-            if (bookInCollection.id === book.id) {
-              bookInCollection.shelf = shelf;
-            }
-            return bookInCollection;
-          })
-        )
-      )
-      .catch(error => console.log(error));
+    setCollection(
+      collection.map(bookInCollection => {
+        if (bookInCollection.id === book.id) {
+          bookInCollection.shelf = shelf;
+        }
+        return bookInCollection;
+      })
+    );
+    BooksAPI.update(book, shelf).catch(error => console.log(error));
   };
 
   return (
