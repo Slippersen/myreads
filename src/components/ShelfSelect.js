@@ -5,7 +5,7 @@ const ShelfSelect = ({ book, bookInCollection, shelf, updateCollection }) => {
   return (
     ((shelf && bookInCollection.shelf === shelf) || !shelf) && (
       <div className="book-shelf-changer">
-        <select value={bookInCollection && bookInCollection.shelf} onChange={event => updateCollection(book, event.target.value)}>
+        <select value={(bookInCollection && bookInCollection.shelf) || 'none'} onChange={event => updateCollection(book, event.target.value)}>
           <option value="move" disabled>
             Move to...
           </option>
