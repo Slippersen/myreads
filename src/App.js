@@ -14,9 +14,19 @@ const App = () => {
       .catch(error => console.log(error));
   }, []);
 
-  const updateMyCollection = data => {
-    // TODO: update API
-    setMyCollection(data);
+  useEffect(() => {}, [myCollection]);
+
+  const updateCollection = (book, shelf) => {
+    BooksAPI.update(book, shelf).then(
+      setMyCollection(
+        myCollection.map(bookInCollection => {
+          if (bookInCollection.id === book.id) {
+            bookInCollection.shelf = shelf;
+          }
+          return bookInCollection;
+        })
+      )
+    );
   };
 
   return (
@@ -34,19 +44,19 @@ const App = () => {
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Currently Reading</h2>
                   <div className="bookshelf-books">
-                    <BooksGrid books={myCollection} myCollection={myCollection} shelf="currentlyReading" />
+                    <BooksGrid books={myCollection} myCollection={myCollection} shelf="currentlyReading" updateCollection={updateCollection} />
                   </div>
                 </div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Want to Read</h2>
                   <div className="bookshelf-books">
-                    <BooksGrid books={myCollection} myCollection={myCollection} shelf="wantToRead" />
+                    <BooksGrid books={myCollection} myCollection={myCollection} shelf="wantToRead" updateCollection={updateCollection} />
                   </div>
                 </div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Read</h2>
                   <div className="bookshelf-books">
-                    <BooksGrid books={myCollection} myCollection={myCollection} shelf="read" />
+                    <BooksGrid books={myCollection} myCollection={myCollection} shelf="read" updateCollection={updateCollection} />
                   </div>
                 </div>
               </div>
@@ -59,7 +69,7 @@ const App = () => {
           </div>
         )}
       />
-      <Route path="/search" render={() => <SearchPage myCollection={myCollection} updateMyCollection={updateMyCollection} />} />
+      <Route path="/search" render={() => <SearchPage myCollection={myCollection} updateCollection={updateCollection} />} />
     </div>
   );
 };

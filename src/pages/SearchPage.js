@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import BooksGrid from '../components/BooksGrid';
 import * as BooksAPI from '../services/BooksAPI';
 
-const SearchPage = ({ myCollection, updateMyCollection }) => {
+const SearchPage = ({ myCollection, updateCollection }) => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
 
@@ -41,7 +41,7 @@ const SearchPage = ({ myCollection, updateMyCollection }) => {
         </div>
       </div>
       <div className="search-books-results">
-        <BooksGrid books={results} myCollection={myCollection} />
+        <BooksGrid books={results} myCollection={myCollection} updateCollection={updateCollection} />
       </div>
     </div>
   );
@@ -49,7 +49,7 @@ const SearchPage = ({ myCollection, updateMyCollection }) => {
 
 SearchPage.propTypes = {
   myCollection: PropTypes.array.isRequired,
-  updateMyCollection: PropTypes.func.isRequired,
+  updateCollection: PropTypes.func.isRequired,
 };
 
 export default SearchPage;
