@@ -25,8 +25,10 @@ const SearchPage = ({ myCollection, updateCollection }) => {
   }, [query]);
 
   const handleSearch = event => {
-    if (event.key === 'Enter') {
+    if (event.target.value !== '') {
       setQuery(event.target.value);
+    } else {
+      setResults([]);
     }
   };
 
@@ -37,7 +39,7 @@ const SearchPage = ({ myCollection, updateCollection }) => {
           <button className="close-search">Close</button>
         </Link>
         <div className="search-books-input-wrapper">
-          <input type="text" placeholder="Search by title or author and hit Enter" onKeyUp={event => handleSearch(event)} />
+          <input type="text" placeholder="Search by title or author" onKeyUp={event => handleSearch(event)} />
         </div>
       </div>
       <div className="search-books-results">
