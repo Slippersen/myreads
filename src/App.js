@@ -14,8 +14,6 @@ const App = () => {
       .catch(error => console.log(error));
   }, []);
 
-  useEffect(() => {}, [myCollection]);
-
   const updateCollection = (book, shelf) => {
     BooksAPI.update(book, shelf).then(
       setMyCollection(
