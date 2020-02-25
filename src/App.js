@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, Link } from 'react-router-dom';
-// import * as BooksAPI from './services/BooksAPI';
 import SearchPage from './pages/SearchPage';
+import * as BooksAPI from './services/BooksAPI';
 import './App.css';
 
 const App = () => {
+  const [myCollection, setMyCollection] = useState([]);
+
+  useEffect(() => {
+    BooksAPI.getAll()
+      .then(data => data && setMyCollection(data))
+      .catch(error => console.log(error));
+  }, []);
+
+  const updateMyCollection = data => {
+    // TODO: update API
+    setMyCollection(data);
+  };
+
   return (
     <div className="app">
       <Route
@@ -237,7 +250,7 @@ const App = () => {
           </div>
         )}
       />
-      <Route path="/search" component={SearchPage} />
+      <Route path="/search" render={() => <SearchPage myCollection={myCollection} updateMyCollection={updateMyCollection} />} />
     </div>
   );
 };

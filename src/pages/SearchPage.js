@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import ShelfSelect from '../components/ShelfSelect';
 import * as BooksAPI from '../services/BooksAPI';
 
 const SearchPage = ({ myCollection, updateMyCollection }) => {
@@ -53,17 +54,7 @@ const SearchPage = ({ myCollection, updateMyCollection }) => {
                         height: 193,
                         backgroundImage: `url("${result.imageLinks && result.imageLinks.smallThumbnail}")`,
                       }}></div>
-                    <div className="book-shelf-changer">
-                      <select>
-                        <option value="move" disabled>
-                          Move to...
-                        </option>
-                        <option value="currentlyReading">Currently Reading</option>
-                        <option value="wantToRead">Want to Read</option>
-                        <option value="read">Read</option>
-                        <option value="none">None</option>
-                      </select>
-                    </div>
+                    <ShelfSelect bookInCollection={myCollection.filter(book => book.id === result.id)[0]} />
                   </div>
                   <div className="book-title">{result.title}</div>
                   <div className="book-authors">{result.authors && result.authors.join(', ')}</div>
