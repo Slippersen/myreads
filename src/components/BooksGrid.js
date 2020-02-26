@@ -4,7 +4,7 @@ import CollectionContext from '../contexts/CollectionContext';
 import ShelfSelect from './ShelfSelect';
 
 const BooksGrid = ({ books, shelf }) => {
-  const { collection, updateCollection } = useContext(CollectionContext);
+  const { collection } = useContext(CollectionContext);
 
   return (
     <ol className="books-grid">
@@ -22,7 +22,7 @@ const BooksGrid = ({ books, shelf }) => {
                         height: 193,
                         backgroundImage: `url("${book.imageLinks && book.imageLinks.smallThumbnail}")`,
                       }}></div>
-                    <ShelfSelect book={book} bookInCollection={collection.filter(myBook => myBook.id === book.id)[0]} shelf={shelf || null} updateCollection={updateCollection} />
+                    <ShelfSelect book={book} bookInCollection={collection.filter(myBook => myBook.id === book.id)[0]} shelf={shelf || null} />
                   </div>
                   <div className="book-title">{book.title}</div>
                   <div className="book-authors">{book.authors && book.authors.join(', ')}</div>
