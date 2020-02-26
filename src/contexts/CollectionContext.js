@@ -13,27 +13,30 @@ export const CollectionProvider = ({ children }) => {
   }, []);
 
   const updateCollection = (book, shelf) => {
-    let isBookInCollection = collection.filter(bookInCollection => bookInCollection.id === book.id).length > 0;
-    if (!isBookInCollection) {
-      // Add new book to collection
-      let newBook = { ...book };
-      newBook.shelf = shelf;
-      setCollection(collection.concat([newBook]));
-    } else {
-      setCollection(
-        collection
-          .map(bookInCollection => {
-            // Change shelf for existing book
-            if (bookInCollection.id === book.id) {
-              bookInCollection.shelf = shelf;
-            }
-            return bookInCollection;
-          })
-          // Remove books that have 'none' shelf
-          .filter(bookInCollection => bookInCollection.shelf !== 'none')
-      );
-    }
-    BooksAPI.update(book, shelf).catch(error => console.log(error));
+    BooksAPI.update(book, shelf)
+      .then(() => {
+        let isBookInCollection = collection.filter(bookInCollection => bookInCollection.id === book.id).length > 0;
+        if (!isBookInCollection) {
+          // Add new book to collection
+          let newBook = { ...book };
+          newBook.shelf = shelf;
+          setCollection(collection.concat([newBook]));
+        } else {
+          setCollection(
+            collection
+              .map(bookInCollection => {
+                // Change shelf for existing book
+                if (bookInCollection.id === book.id) {
+                  bookInCollection.shelf = shelf;
+                }
+                return bookInCollection;
+              })
+              // Remove books that have 'none' shelf
+              .filter(bookInCollection => bookInCollection.shelf !== 'none')
+          );
+        }
+      })
+      .catch(error => console.log(error));
   };
 
   return (
