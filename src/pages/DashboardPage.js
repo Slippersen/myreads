@@ -1,15 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import CollectionContext from '../contexts/CollectionContext';
 import BooksGrid from '../components/BooksGrid';
 
 const DashboardPage = () => {
-  const { collection, refreshCollection } = useContext(CollectionContext);
-
-  useEffect(() => {
-    refreshCollection();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { collection } = useContext(CollectionContext);
 
   return (
     <div className="list-books">

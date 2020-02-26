@@ -13,21 +13,27 @@ export const CollectionProvider = ({ children }) => {
   }, []);
 
   const updateCollection = (book, shelf) => {
-    setCollection(
-      collection.map(bookInCollection => {
-        if (bookInCollection.id === book.id) {
-          bookInCollection.shelf = shelf;
-        }
-        return bookInCollection;
-      })
-    );
+    let isBookInCollection = collection.filter(bookInCollection => bookInCollection.id === book.id).length > 0;
+    if (!isBookInCollection) {
+      // Add new book to collection
+      let newBook = { ...book };
+      newBook.shelf = shelf;
+      setCollection(collection.concat([newBook]));
+    } else {
+      setCollection(
+        collection
+          .map(bookInCollection => {
+            // Change shelf for existing book
+            if (bookInCollection.id === book.id) {
+              bookInCollection.shelf = shelf;
+            }
+            return bookInCollection;
+          })
+          // Remove books that have 'none' shelf
+          .filter(bookInCollection => bookInCollection.shelf !== 'none')
+      );
+    }
     BooksAPI.update(book, shelf).catch(error => console.log(error));
-  };
-
-  const refreshCollection = () => {
-    BooksAPI.getAll()
-      .then(data => data && setCollection(data))
-      .catch(error => console.log(error));
   };
 
   return (
@@ -35,7 +41,6 @@ export const CollectionProvider = ({ children }) => {
       value={{
         collection,
         updateCollection,
-        refreshCollection,
       }}>
       {children}
     </CollectionContext.Provider>
