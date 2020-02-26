@@ -1,10 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import CollectionContext from '../contexts/CollectionContext';
 import BooksGrid from '../components/BooksGrid';
 
 const DashboardPage = () => {
-  const { collection } = useContext(CollectionContext);
+  const { collection, refreshCollection } = useContext(CollectionContext);
+
+  useEffect(() => {
+    refreshCollection();
+  }, []);
 
   return (
     <div className="list-books">

@@ -24,11 +24,18 @@ export const CollectionProvider = ({ children }) => {
     BooksAPI.update(book, shelf).catch(error => console.log(error));
   };
 
+  const refreshCollection = () => {
+    BooksAPI.getAll()
+      .then(data => data && setCollection(data))
+      .catch(error => console.log(error));
+  };
+
   return (
     <CollectionContext.Provider
       value={{
         collection,
         updateCollection,
+        refreshCollection,
       }}>
       {children}
     </CollectionContext.Provider>
